@@ -13,7 +13,7 @@
 <body>
 <script src="https://js.stripe.com/v3/"></script>
 
-<form action="/charge" method="post" id="payment-form">
+<form action="/payment" method="post" id="payment-form">
     <div class="form-row inline">
         <div class="col">
             <label for="name">

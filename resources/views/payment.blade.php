@@ -19,7 +19,7 @@
 
 
 
-             <form action="/payment" method="post" id="payment-form">
+             <form action="/api/payment" method="post" id="payment-form">
                  <div class="form-row">
                      <label for="iban-element">
                      </label>
@@ -28,13 +28,13 @@
                              <label for="name">
                                  Name
                              </label>
-                             <input id="name" name="name" placeholder="Jenny Rosen" required>
+                             <input id="name" value="jen" name="name" placeholder="Jenny Rosen" required>
                          </div>
                          <div class="col">
                              <label for="email">
                                  Email Address
                              </label>
-                             <input id="email" name="email" type="email" placeholder="jenny.rosen@example.com" required>
+                             <input id="email" value="jen@msn.com" name="email" type="email" placeholder="jenny.rosen@example.com" required>
                          </div>
                      </div>
                      <div id="iban-element">
@@ -53,7 +53,7 @@
 
 
 <script>
-    var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+    var stripe = Stripe('pk_test_G5G9sEyqMgDgPD5OYpiwKpC1');
 
     // Create an instance of Elements.
     var elements = stripe.elements();
@@ -131,7 +131,7 @@
     });
 
     function stripeSourceHandler(source) {
-        console.log(source)
+        console.log(source);
         // Insert the Source ID into the form so it gets submitted to the server.
         var form = document.getElementById('payment-form');
         var hiddenInput = document.createElement('input');
@@ -141,7 +141,7 @@
         form.appendChild(hiddenInput);
 
         // Submit the form.
-        //form.submit();
+        // form.submit();
     }
 
 </script>
