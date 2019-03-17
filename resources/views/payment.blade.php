@@ -131,7 +131,7 @@
     });
 
     function stripeSourceHandler(source) {
-        console.log(source);
+        // console.log(source);
         // Insert the Source ID into the form so it gets submitted to the server.
         var form = document.getElementById('payment-form');
         var hiddenInput = document.createElement('input');
@@ -141,7 +141,7 @@
         form.appendChild(hiddenInput);
 
         // Submit the form.
-        // form.submit();
+        form.submit();
     }
 
 </script>
