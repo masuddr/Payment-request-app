@@ -8,30 +8,47 @@ use Mollie\Laravel\Facades\Mollie;
 
 class PaymentsController extends Controller
 {
-    public function preparePayment()
+    public function index()
     {
-        $payment = Mollie::api()->payments()->create([
-            'amount' => [
-                'currency' => 'EUR',
-                'value' => '10.00', // You must send the correct number of decimals, thus we enforce the use of strings
-            ],
-            'description' => 'My first API payment',
-            'webhookUrl' => route('webhooks.mollie'),
-            'redirectUrl' => route('order.success'),
-        ]);
 
-        $payment = Mollie::api()->payments()->get($payment->id);
-
-        // redirect customer to Mollie checkout page
-        return redirect($payment->getCheckoutUrl(), 303);
     }
 
-    public function pay(){
-        $mollie = new MollieApiClient();
-        $mollie->setApiKey("test_2UrcFn9j2vdcm3sjbn7NFc9Kat2zS5");
+    public function preparePayment()
+    {
+        $mollie = new \Mollie\Api\MollieApiClient();
+        $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
         $method = $mollie->methods->get(\Mollie\Api\Types\PaymentMethod::IDEAL, ["include" => "issuers"]);
 
-        return view('pay',compact($method));
+        return view('molliepayment', compact('method'));
+    }
+
+    public function pay(Request $request){
+        $mollie = new \Mollie\Api\MollieApiClient();
+        $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
+
+        $orderId = 32;
+
+        $payment = $mollie->payments->create([
+            "amount" => [
+                "currency" => "EUR",
+                "value" => "27.50" // You must send the correct number of decimals, thus we enforce the use of strings
+            ],
+            "method" => \Mollie\Api\Types\PaymentMethod::IDEAL,
+            "description" => "Order #{$orderId}",
+            "redirectUrl" => "https://5d8370a7.ngrok.io/payments/return.php?order_id={$orderId}",
+            "webhookUrl" => "https://5d8370a7.ngrok.io/payments/webhook.blade.php",
+            "metadata" => [
+                "order_id" => $orderId,
+            ],
+            "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
+        ]);
+        $test = $request->input('bank');
+        $testbool = false;
+        if ($test == null){
+            $testbool = true;
+        }
+//        return view('payments',compact('payment'));
+        return var_export($testbool, true);
     }
 
     /**

@@ -25,6 +25,14 @@ Route::get('/pay', function () {
 });
 
 
+//Route::get('/molliepayment', function () {
+//    return view('molliepayment');
+//});
+
+Route::get('/molliepayment', 'PaymentsController@preparePayment');
+
+Route::post('/submit', 'PaymentsController@pay');
+
 Route::get('/payments', function () {
     return view('payments');
 });

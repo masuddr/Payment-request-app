@@ -14,6 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->increments('user_id');
             $table->string('stripe_id')->nullable()->collation('utf8mb4_bin');
             $table->string('card_brand')->nullable();
             $table->string('card_last_four', 4)->nullable();

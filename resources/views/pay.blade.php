@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<form action="/charge" method="post" id="payment-form">
+<form action="api/payment" method="post" id="payment-form">
     <div class="form-row inline">
         <div class="col">
             <label for="name">
