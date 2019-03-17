@@ -1,4 +1,5 @@
 var stripe = Stripe('pk_test_G5G9sEyqMgDgPD5OYpiwKpC1');
+
 // Create an instance of Elements.
 var elements = stripe.elements();
 
@@ -19,7 +20,7 @@ var options = {
     // the Element as placeholderCountry. The example IBAN that is being used
     // as placeholder reflects the IBAN format of that country.
     placeholderCountry: 'NL',
-}
+};
 
 // Create an instance of the card Element.
 var iban = elements.create('iban', options);
