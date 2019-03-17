@@ -20,6 +20,11 @@ Route::get('/payment', function () {
     return view('payment');
 });
 
+Route::get('/pay', function () {
+    return view('pay');
+});
+
+
 Route::get('/payments', function () {
     return view('payments');
 });
