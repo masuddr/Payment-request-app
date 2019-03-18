@@ -26,7 +26,7 @@ class PaymentsController extends Controller
         $mollie = new \Mollie\Api\MollieApiClient();
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
 
-        $orderId = 32;
+        $orderId = time();
 
         $payment = $mollie->payments->create([
             "amount" => [
