@@ -31,24 +31,19 @@ class PaymentsController extends Controller
         $payment = $mollie->payments->create([
             "amount" => [
                 "currency" => "EUR",
-                "value" => "27.50" // You must send the correct number of decimals, thus we enforce the use of strings
+                "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
-            "method" => \Mollie\Api\Types\PaymentMethod::IDEAL,
             "description" => "Order #{$orderId}",
             "redirectUrl" => "https://5d8370a7.ngrok.io/payments/return.php?order_id={$orderId}",
-            "webhookUrl" => "https://5d8370a7.ngrok.io/payments/webhook.blade.php",
+            "webhookUrl" => "https://26af5ca6.ngrok.io/payments/webhook.blade.php",
             "metadata" => [
                 "order_id" => $orderId,
             ],
             "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
         ]);
-        $test = $request->input('bank');
-        $testbool = false;
-        if ($test == null){
-            $testbool = true;
-        }
-//        return view('payments',compact('payment'));
-        return var_export($testbool, true);
+
+        $url = $payment->getCheckoutUrl();
+        return redirect($url);
     }
 
     /**

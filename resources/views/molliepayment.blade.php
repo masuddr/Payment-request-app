@@ -10,15 +10,7 @@
 <body>
     <form method="post" action="/submit">
         @csrf
-        Select your bank:
-        <select name="issuer">
-            {{--@csrf {{ csrf_field() }} --}}
-
-            <option value="">or select later</option>
-            @foreach ($method->issuers() as $issuer)
-                <option id="bank" value='{{$issuer->id}}'>{{$issuer->name}}</option>
-            @endforeach
-        </select>
+        <input type="text" name="amount" placeholder="amount">
         <button>OK</button>
     </form>
 </body>
