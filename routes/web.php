@@ -24,6 +24,8 @@ Route::get('/pay', function () {
     return view('pay');
 });
 
+Route::get('/home', 'UsersController@showpayments');
+
 
 //Route::get('/molliepayment', function () {
 //    return view('molliepayment');
