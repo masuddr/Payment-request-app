@@ -23,7 +23,7 @@ class UsersController extends Controller
         $user = User::find($user_id);
 
 //        return view('/home', compact('user'));
-        return $user_id;
+        return view('/home', compact('user'));
     }
 
     /**
