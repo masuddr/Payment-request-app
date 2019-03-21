@@ -13,13 +13,22 @@ class TransactionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function index()
     {
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
-        $banks = $user->banks;
+        $banks = $user->bankaccounts;
 
         return view('transactions.view',compact('banks'));
+
 
 
     }
