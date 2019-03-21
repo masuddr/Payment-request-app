@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -18,11 +19,11 @@ class UsersController extends Controller
 
     public function showpayments()
     {
-        $query = mysql_query("SELECT * FROM `users` WHERE `id` = '".$_SESSION['userid']."' ")or die(mysql_error());
-        $arr = mysql_fetch_array($query);
-        $num = mysql_numrows($query);
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
 
-        return view('/home', compact('arr, num'));
+//        return view('/home', compact('user'));
+        return $user_id;
     }
 
     /**
