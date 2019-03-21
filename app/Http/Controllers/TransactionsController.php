@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
-use App;
+use App\User;
 
 class TransactionsController extends Controller
 {
@@ -14,7 +15,9 @@ class TransactionsController extends Controller
      */
     public function index()
     {
-        $banks = App\BankAccount::all();
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $banks = $user->banks;
 
         return view('transactions.view',compact('banks'));
 

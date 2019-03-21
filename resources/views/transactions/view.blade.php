@@ -9,7 +9,6 @@
 
                 <div class="card-body">
                     <h3>Your listings</h3>
-                    @if(count($banks))
                         <table class="table table-striped">
                             <tr>
                                 <th>Company</th>
@@ -21,8 +20,10 @@
                                 <tr>
                                     <th>{{$bank->name}}</th>
                                     <th>{{$bank->number}}</th>
-                                                                      <th><a href="/listings/{{$bank->id}}/edit" class="btn btn-primary btn-sm">Edit</a>
-                                    <th>   <form action="{{ action('ListingsController@destroy', $bank->id) }}" method="post">
+                                    <th><a href="/listings/{{$bank->id}}/edit" class="btn btn-primary btn-sm">Edit</a></th>
+                                    <th>   <form
+{{--                                                action="{{ action('TransactionsController@destroy', $bank->id) }}" --}}
+                                                method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
                                             <button type="submit" class="btn-danger btn-sm float-right">Delete</button>
@@ -31,7 +32,6 @@
                                 </tr>
                             @endforeach
                         </table>
-                    @endif
                 </div>
             </div>
         </div>
