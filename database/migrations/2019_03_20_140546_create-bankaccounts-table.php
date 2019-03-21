@@ -17,8 +17,7 @@ class CreateBankaccountsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('banking_number');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

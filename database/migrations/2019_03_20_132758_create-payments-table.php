@@ -17,8 +17,8 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->decimal('amount', 10, 2);
             $table->string('currency');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->string('status');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
