@@ -41,7 +41,7 @@ Route::get('/payments', function () {
 
 
 
-
+Route::get('/view','TransactionsController@index');
 
 Auth::routes();
 
