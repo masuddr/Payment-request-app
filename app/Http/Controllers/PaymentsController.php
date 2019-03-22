@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Mollie\Api;
 use Mollie\Laravel\Facades\Mollie;
+use App\User;
+use App\BankAccount;
 
 class PaymentsController extends Controller
 {
@@ -53,7 +55,15 @@ class PaymentsController extends Controller
      */
     public function create()
     {
-        return view('payments.create');
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $banks = $user->bankaccounts;
+        $bank = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
+
+
+        return view('payments.create',compact('bank'));
+
+
     }
 
     /**
@@ -64,7 +74,8 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        return $request->input('amount');
     }
 
     /**
