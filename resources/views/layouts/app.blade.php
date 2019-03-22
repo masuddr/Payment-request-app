@@ -37,6 +37,10 @@
                     <a href="/view" class="navbar-brand">Bank Accounts</a>
                     </ul>
 
+                    <ul class="navbar-nav mr-auto">
+                        <a href="payments/view" class="navbar-brand">Payments</a>
+                    </ul>
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
