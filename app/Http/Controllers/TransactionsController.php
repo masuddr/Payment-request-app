@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\BankAccount;
 
 class TransactionsController extends Controller
 {
@@ -40,7 +41,7 @@ class TransactionsController extends Controller
      */
     public function create()
     {
-        //
+        return view('transactions.create');
     }
 
     /**
@@ -51,7 +52,19 @@ class TransactionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Valdiation
+        $this->validate($request,['iban' => 'iban']);
+        $this->validate($request,['name' => 'required','iban' => 'required']);
+
+        $bank = new BankAccount();
+        $bank->name = $request->input('name');
+        $bank->banking_number = strtoupper($request->input('iban'));
+        $bank->user_id = auth()->user()->id;
+
+        $bank->save();
+
+        return redirect('/home')->with('success','Transaction Added');
+
     }
 
     /**
@@ -71,22 +84,8 @@ class TransactionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -96,6 +95,8 @@ class TransactionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bank = BankAccount::find($id);
+        $bank->delete();
+        return redirect('/home')->with('danger','Transaction Deleted');
     }
 }

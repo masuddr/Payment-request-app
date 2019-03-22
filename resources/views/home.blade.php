@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Dashboard<span class="float-right"><a href="/payments/create" class="btn btn-success btn-sm">Create Payment</a></span></div>
 
                 <table border="1" cellpadding="3">
                     <tr><td colspan="2" align="center">Your Info</td></tr>

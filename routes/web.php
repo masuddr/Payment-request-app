@@ -39,7 +39,8 @@ Route::get('/payments', function () {
     return view('payments');
 });
 
-
+Route::resource('transactions','TransactionsController');
+Route::resource('payments','PaymentsController');
 
 Route::get('/view','TransactionsController@index');
 
