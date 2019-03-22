@@ -74,8 +74,14 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $banks = $user->bankaccounts;
+       return $banks[$request->get('banking_number')];
 
-        return $request->input('amount');
+
+
+
     }
 
     /**
