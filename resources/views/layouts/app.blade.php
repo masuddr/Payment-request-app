@@ -33,13 +33,15 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                    <a href="/view" class="navbar-brand">Bank Accounts</a>
-                    </ul>
+                    @if (Auth::check())
+                        <ul class="navbar-nav mr-auto">
+                            <a href="/view" class="navbar-brand">Bank Accounts</a>
+                        </ul>
+                        <ul class="navbar-nav mr-auto">
+                            <a href="/payments" class="navbar-brand">Payments</a>
+                        </ul>
 
-                    <ul class="navbar-nav mr-auto">
-                        <a href="/payments" class="navbar-brand">Payments</a>
-                    </ul>
+                @endif
 
 
                     <!-- Right Side Of Navbar -->

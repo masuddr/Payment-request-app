@@ -83,13 +83,32 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
+        $mollie = new \Mollie\Api\MollieApiClient();
+        $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
+
+        $orderId = time();
+
+        $payment = $mollie->payments->create([
+            "amount" => [
+                "currency" => "EUR",
+                "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
+            ],
+            "description" => "Order #{$orderId}",
+            "redirectUrl" => "https://668c6ca6.ngrok.io/payments/return.php?order_id={$orderId}",
+            "webhookUrl" => "https://668c6ca6.ngrok.io/payments/webhook.blade.php",
+            "metadata" => [
+                "order_id" => $orderId,
+            ],
+            "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
+        ]);
+
+        // for sending the mail to the mail address recipients
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
         $banks = $user->bankaccounts;
 
-
-
-       return $banks[$request->get('banking_number')]->banking_number;
+        $url = $payment->getCheckoutUrl();
+        return redirect($url);
 
 
 
