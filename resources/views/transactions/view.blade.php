@@ -8,7 +8,7 @@
                 <div class="card-header">Dashboard<span class="float-right"><a href="/transactions/create" class="btn btn-success btn-sm">Create</a></span></div>
 
                 <div class="card-body">
-                    <h3>Your Banks Accounts</h3>
+                    <h3>Your Bank Accounts</h3>
                     @if(count($banks))
                         <table class="table table-striped">
                             <tr>

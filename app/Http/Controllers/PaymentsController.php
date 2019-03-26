@@ -7,12 +7,17 @@ use Mollie\Api;
 use Mollie\Laravel\Facades\Mollie;
 use App\User;
 use App\BankAccount;
+use App\Payment;
 
 class PaymentsController extends Controller
 {
     public function index()
     {
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $payments = $user->payments;
 
+        return view('payments.view', compact('payments'));
     }
 
     public function preparePayment()
@@ -36,8 +41,8 @@ class PaymentsController extends Controller
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
             "description" => "Order #{$orderId}",
-            "redirectUrl" => "https://5d8370a7.ngrok.io/payments/return.php?order_id={$orderId}",
-            "webhookUrl" => "https://26af5ca6.ngrok.io/payments/webhook.blade.php",
+            "redirectUrl" => "https://668c6ca6.ngrok.io/payments/return.php?order_id={$orderId}",
+            "webhookUrl" => "https://668c6ca6.ngrok.io/payments/webhook.blade.php",
             "metadata" => [
                 "order_id" => $orderId,
             ],
@@ -58,8 +63,12 @@ class PaymentsController extends Controller
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
         $banks = $user->bankaccounts;
+        $banks_count = $user->bankaccounts->count();
         $bank = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
-
+        if ($banks_count == 0)
+        {
+            return view('transactions.create')->with('danger','You have no bank accounts. Please create one before attempting to create a payment.');
+        }
 
         return view('payments.create',compact('bank'));
 
@@ -77,6 +86,9 @@ class PaymentsController extends Controller
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
         $banks = $user->bankaccounts;
+
+
+
        return $banks[$request->get('banking_number')]->banking_number;
 
 
@@ -126,6 +138,8 @@ class PaymentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $payment = Payment::find($id);
+        $payment->delete();
+        return redirect('/home')->with('success','Payment Deleted');
     }
 }

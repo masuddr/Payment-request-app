@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     <h3>Your Payments</h3>
-                    @if(count($banks))
+                    @if(count($payments))
                         <table class="table table-striped">
                             <tr>
                                 <th>Amount</th>
@@ -21,7 +21,7 @@
                                 <tr>
                                     <td>{{$payment->amount}}</td>
                                     <td>{{$payment->status}}</td>
-                                    <th>   <form action="{{ action('PaymentsController@destroy', $bank->id) }}" method="post">
+                                    <th>   <form action="{{ action('PaymentsController@destroy', $payment->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
                                             <button type="submit" class="btn-danger btn-sm float-right">Delete</button>

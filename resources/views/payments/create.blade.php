@@ -10,11 +10,11 @@
                     {{ Form::open(array('action' => 'PaymentsController@store')) }}
                     {{--{{ method_field('HEAD') }}--}}
                     <div class="form-group">
-                        {!! Form::label('name', 'Your Name') !!}
+                        {!! Form::label('name', 'Your name') !!}
                         {!! Form::text('name', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('email', 'E-mail Address') !!}
+                        {!! Form::label('email', 'Receiver his e-mail address') !!}
                         {!! Form::text('email', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">

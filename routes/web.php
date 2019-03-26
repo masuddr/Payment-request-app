@@ -35,9 +35,7 @@ Route::get('/molliepayment', 'PaymentsController@preparePayment');
 
 Route::post('/submit', 'PaymentsController@pay');
 
-Route::get('/payments', function () {
-    return view('payments');
-});
+Route::get('/payments', 'PaymentsController@index');
 
 Route::resource('transactions','TransactionsController');
 Route::resource('payments','PaymentsController');

@@ -29,9 +29,6 @@ class TransactionsController extends Controller
         $banks = $user->bankaccounts;
 
         return view('transactions.view',compact('banks'));
-
-
-
     }
 
     /**
@@ -97,6 +94,6 @@ class TransactionsController extends Controller
     {
         $bank = BankAccount::find($id);
         $bank->delete();
-        return redirect('/home')->with('danger','Transaction Deleted');
+        return redirect('/home')->with('success','Transaction Deleted');
     }
 }
