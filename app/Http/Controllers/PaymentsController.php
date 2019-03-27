@@ -113,7 +113,7 @@ class PaymentsController extends Controller
         $pay->status = $payment->status;
         $pay->user_id = $user_id;
         $pay->save();
-        return var_dump($pay);
+        return redirect('payments');
 
         
 
@@ -180,6 +180,6 @@ class PaymentsController extends Controller
     {
         $payment = Payment::find($id);
         $payment->delete();
-        return redirect('/home')->with('success','Payment Deleted');
+        return redirect('payments')->with('success','Payment Deleted');
     }
 }
