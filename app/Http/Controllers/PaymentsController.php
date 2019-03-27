@@ -67,7 +67,7 @@ class PaymentsController extends Controller
         $bank = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
         if ($banks_count == 0)
         {
-            return view('transactions.create')->with('danger','You have no bank accounts. Please create one before attempting to create a payment.');
+            return redirect('transactions/create')->with('danger','You have no bank accounts. Please create one before attempting to create a payment.');
         }
 
         return view('payments.create',compact('bank'));
@@ -93,22 +93,43 @@ class PaymentsController extends Controller
                 "currency" => "EUR",
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
-            "description" => "Order #{$orderId}",
-            "redirectUrl" => "https://668c6ca6.ngrok.io/payments/return.php?order_id={$orderId}",
-            "webhookUrl" => "https://668c6ca6.ngrok.io/payments/webhook.blade.php",
+            "description" => $request->input('msg'),
+            "redirectUrl" => "https://5db35498.ngrok.io/payments/return.php?order_id={$orderId}",
+            "webhookUrl" => "https://5db35498.ngrok.io/payments/webhook.blade.php",
             "metadata" => [
                 "order_id" => $orderId,
             ],
             "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
         ]);
 
-        // for sending the mail to the mail address recipients
+        $payment = $mollie->payments->get($payment->id);
         $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        $banks = $user->bankaccounts;
 
-        $url = $payment->getCheckoutUrl();
-        return redirect($url);
+        $pay = new Payment();
+        $pay->mollie_id = $payment->id;
+        $pay->amount = $payment->amount->value;
+        $pay->currency = $payment->amount->currency;
+        $pay->description = $payment->description;
+        $pay->status = $payment->status;
+        $pay->user_id = $user_id;
+        $pay->save();
+        return var_dump($pay);
+
+        
+
+        // for sending the mail to the mail address recipients
+//        $user_id = auth()->user()->id;
+//        $user = User::find($user_id);
+//        $banks = $user->bankaccounts;
+//
+//        $url = $payment->getCheckoutUrl();
+//        $status = $payment->status;
+//        $payment_in_database = Payment::find($payment->id);
+//        return $payment_in_database->description;
+//        var_dump($payment_in_database);
+//        $payment_in_database->status = $status;
+//        $payment_in_database->save();
+//        return $payment_in_database->status;
 
 
 
