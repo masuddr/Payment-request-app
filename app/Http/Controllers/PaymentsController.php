@@ -97,7 +97,7 @@ class PaymentsController extends Controller
 
         $orderId = time();
 
-        $this->validate($request,['msg' => 'required|max:15', 'amount' => 'digits_between:0.50,750']);
+        $this->validate($request,['description' => 'required|max:15', 'amount' => 'digits_between:0.50,750']);
 
         $payment = $mollie->payments->create([
             "amount" => [
@@ -120,7 +120,7 @@ class PaymentsController extends Controller
         $pay->mollie_id = $payment->id;
         $pay->amount = $payment->amount->value;
         $pay->currency = $payment->amount->currency;
-        $pay->description = $request->input('msg');
+        $pay->description = $request->input('description');
         $pay->status = $payment->status;
         $pay->payment_url = $payment->getCheckoutUrl();
         $pay->user_id = $user_id;

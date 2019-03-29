@@ -26,8 +26,8 @@
 
                     </div>
                     <div class="form-group">
-                        {!! Form::label('message', 'Description') !!}
-                        {!! Form::textarea('msg', null, ['class' => 'form-control']) !!}
+                        {!! Form::label('description', 'Description') !!}
+                        {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
                     </div>
                     <br>
                     {{Form::submit('Send Payment',['class' => 'btn-primary'])}}
