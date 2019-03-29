@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -46,6 +47,8 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <a href="?lang=english">English</a>
+                        <a href="?lang=nederlands">Nederlands</a>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
