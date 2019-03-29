@@ -97,12 +97,14 @@ class PaymentsController extends Controller
 
         $orderId = time();
 
+        $this->validate($request,['msg' => 'required|max:15', 'amount' => 'numeric|min:0,50']);
+
         $payment = $mollie->payments->create([
             "amount" => [
                 "currency" => "EUR",
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
-            "description" => "$orderId",
+            "description" => $request->input('msg'),
             "redirectUrl" => "http://127.0.0.1:8000/payments",
             "webhookUrl" => "https://5db35498.ngrok.io/payments/webhook.blade.php",
             "metadata" => [
@@ -124,7 +126,7 @@ class PaymentsController extends Controller
         $pay->user_id = $user_id;
         $pay->save();
 
-        return $payment->getCheckoutUrl();
+        return redirect('payments');
 
     }
 
