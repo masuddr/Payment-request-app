@@ -14,4 +14,10 @@ return [
 
     'previous' => '&laquo; Vorige',
     'next'     => 'Volgende &raquo;',
+    'Email' => 'Email adres',
+    'Password' => 'Wachtwoord',
+    'Login' => 'Inloggen',
+    'Register' => 'Registreren',
+
+
 ];
