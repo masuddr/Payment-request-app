@@ -93,8 +93,8 @@ class PaymentsController extends Controller
                 "currency" => "EUR",
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
-            "description" => $request->input('msg'),
-            "redirectUrl" => "https://5db35498.ngrok.io/payments/return.php?order_id={$orderId}",
+            "description" => "$orderId",
+            "redirectUrl" => "http://127.0.0.1:8000/payments/confirmed",
             "webhookUrl" => "https://5db35498.ngrok.io/payments/webhook.blade.php",
             "metadata" => [
                 "order_id" => $orderId,
@@ -109,11 +109,17 @@ class PaymentsController extends Controller
         $pay->mollie_id = $payment->id;
         $pay->amount = $payment->amount->value;
         $pay->currency = $payment->amount->currency;
-        $pay->description = $payment->description;
+        $pay->description = $request->input('msg');
         $pay->status = $payment->status;
         $pay->user_id = $user_id;
         $pay->save();
-        return redirect('payments');
+        $payment->redirectUrl = 'http://127.0.0.1:8000/payments/confirmed?status='.$payment->status;
+
+
+
+
+        //return redirect('payments');
+        return $payment->getCheckoutUrl();
 
         
 
