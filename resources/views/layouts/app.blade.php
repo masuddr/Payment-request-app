@@ -50,10 +50,12 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 {{ Config::get('languages')[App::getLocale()] }}
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu float-left">
                                 @foreach (Config::get('languages') as $lang => $language)
                                     @if ($lang != App::getLocale())
                                         <li>
+                                            <img width="15px" height="16px" src="{{asset('/img/').'/'.$lang.'.png'}}">
+
                                             <a href="{{ route('lang.switch', $lang) }}">{{$language}}</a>
                                         </li>
                                     @endif
