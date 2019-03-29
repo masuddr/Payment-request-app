@@ -19,7 +19,7 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('amount', 'Amount') !!}
-                        {!! Form::number('amount', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('amount', null, ['class' => 'form-control','step' => 0.01]) !!}
                     </div>
                     <div class="form-group">
                         {{ Form::select('banking_number', $bank, null, ['class'=>'form-control']) }}
