@@ -60,7 +60,7 @@ class TransactionsController extends Controller
 
         $bank->save();
 
-        return redirect('/home')->with('success','Transaction Added');
+        return redirect('/view')->with('success','Transaction Added');
 
     }
 
@@ -94,6 +94,6 @@ class TransactionsController extends Controller
     {
         $bank = BankAccount::find($id);
         $bank->delete();
-        return redirect('/home')->with('success','Transaction Deleted');
+        return redirect('/view')->with('success','Transaction Deleted');
     }
 }
