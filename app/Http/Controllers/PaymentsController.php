@@ -120,6 +120,7 @@ class PaymentsController extends Controller
         $pay->currency = $payment->amount->currency;
         $pay->description = $request->input('msg');
         $pay->status = $payment->status;
+        $pay->payment_url = $payment->getCheckoutUrl();
         $pay->user_id = $user_id;
         $pay->save();
 
