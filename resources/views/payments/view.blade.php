@@ -2,10 +2,12 @@
 
 @section('content')
     <script>
-        function myFunction() {
-            var copyText = document.getElementById("myInput");
-            copyText.select();
+        function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
             document.execCommand("copy");
+            $temp.remove();
         }
     </script>
     <div class="row justify-content-center">
@@ -31,8 +33,8 @@
                                 <tr>
                                     <td>{{$payment->amount}}</td>
                                     <td>{{$payment->status}}</td>
-                                    <td><input type="text" readonly value="{{$payment->payment_url}}" id="myInput"></td>
-                                      <td>  <button class="btn btn-primary" onclick="myFunction()">Get Link</button></td>
+                                    <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
+                                    <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">Get Link</button></td>
                                     <th>   <form action="{{ action('PaymentsController@destroy', $payment->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
