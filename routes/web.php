@@ -40,6 +40,8 @@ Route::get('/payments', 'PaymentsController@index');
 Route::resource('transactions','TransactionsController')->middleware('auth');
 Route::resource('payments','PaymentsController')->middleware('auth');
 
+Route::get('/confirmed','PaymentsController@confirmedPayment');
+
 Route::get('/view','TransactionsController@index');
 
 Auth::routes();

@@ -13,9 +13,18 @@ class PaymentsController extends Controller
 {
     public function index()
     {
+        $mollie = new \Mollie\Api\MollieApiClient();
+        $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
+
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
         $payments = $user->payments;
+
+        foreach($payments as $payment)
+        {
+            $requested = $mollie->payments->get($payment->mollie_id);
+            $payment->status = $requested->status;
+        }
 
         return view('payments.view', compact('payments'));
     }
@@ -94,7 +103,7 @@ class PaymentsController extends Controller
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
             "description" => "$orderId",
-            "redirectUrl" => "http://127.0.0.1:8000/payments/confirmed",
+            "redirectUrl" => "http://127.0.0.1:8000/payments",
             "webhookUrl" => "https://5db35498.ngrok.io/payments/webhook.blade.php",
             "metadata" => [
                 "order_id" => $orderId,
@@ -113,32 +122,8 @@ class PaymentsController extends Controller
         $pay->status = $payment->status;
         $pay->user_id = $user_id;
         $pay->save();
-        $payment->redirectUrl = 'http://127.0.0.1:8000/payments/confirmed?status='.$payment->status;
 
-
-
-
-        //return redirect('payments');
         return $payment->getCheckoutUrl();
-
-        
-
-        // for sending the mail to the mail address recipients
-//        $user_id = auth()->user()->id;
-//        $user = User::find($user_id);
-//        $banks = $user->bankaccounts;
-//
-//        $url = $payment->getCheckoutUrl();
-//        $status = $payment->status;
-//        $payment_in_database = Payment::find($payment->id);
-//        return $payment_in_database->description;
-//        var_dump($payment_in_database);
-//        $payment_in_database->status = $status;
-//        $payment_in_database->save();
-//        return $payment_in_database->status;
-
-
-
 
     }
 
