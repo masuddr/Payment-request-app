@@ -97,7 +97,7 @@ class PaymentsController extends Controller
 
         $orderId = time();
 
-        $this->validate($request,['msg' => 'required|max:15', 'amount' => 'numeric|min:0,50']);
+        $this->validate($request,['msg' => 'required|max:15', 'amount' => 'digits_between:0.50,750']);
 
         $payment = $mollie->payments->create([
             "amount" => [
