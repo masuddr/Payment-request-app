@@ -104,7 +104,7 @@ class PaymentsController extends Controller
                 "currency" => "EUR",
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
-            "description" => $request->input('msg'),
+            "description" => $request->input('description'),
             "redirectUrl" => "http://127.0.0.1:8000/payments",
             "webhookUrl" => "https://5db35498.ngrok.io/payments/webhook.blade.php",
             "metadata" => [

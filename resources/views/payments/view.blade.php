@@ -18,7 +18,7 @@
                     </span></div>
 
                 <div class="card-body">
-                    <h3>Your Payments</h3>
+                    <h3>{{__('pagination.yourpayments')}}</h3>
                     @if(count($payments))
                         <table class="table table-striped">
                             <tr>

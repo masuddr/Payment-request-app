@@ -22,7 +22,10 @@ return [
     'ForgotYourPassword?' => 'Wachtwoord Vergeten?',
     'RememberMe' => 'Onthoud Me',
     'BankAccounts' => 'Bankrekeningen',
-    'Payments' => 'Betalingen'
+    'Payments' => 'Betalingen',
+    'yourpayments' => 'Jouw Betalingen',
+    'yourbankaccounts' => 'Jouw Bankrekeningen',
+    'createbankaccount' => 'Bankrekening Aanmaken'
 
 
 ];

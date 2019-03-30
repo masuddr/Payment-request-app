@@ -16,14 +16,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/payment', function () {
-    return view('payment');
-});
-
-Route::get('/pay', function () {
-    return view('pay');
-});
-
 Route::get('/home', 'UsersController@showpayments');
 
 
@@ -31,11 +23,7 @@ Route::get('/home', 'UsersController@showpayments');
 //    return view('molliepayment');
 //});
 
-Route::get('/molliepayment', 'PaymentsController@preparePayment');
 
-Route::post('/submit', 'PaymentsController@pay');
-
-Route::get('/payments', 'PaymentsController@index');
 
 Route::resource('transactions','TransactionsController')->middleware('auth');
 Route::resource('payments','PaymentsController')->middleware('auth');

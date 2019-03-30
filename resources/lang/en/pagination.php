@@ -23,6 +23,9 @@ return [
     'RememberMe' => 'Remember Me',
     'ForgotYourPassword?' => 'Forgot Your Password?',
     'BankAccounts' => 'Bank Accounts',
-    'Payments' => 'Payments'
+    'Payments' => 'Payments',
+    'yourpayments' => 'Your Payments',
+    'yourbankaccounts' => 'Your Bank Accounts',
+    'createbankaccount' => 'Create Bank Account'
 
 ];
