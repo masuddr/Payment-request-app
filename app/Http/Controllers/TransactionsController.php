@@ -52,8 +52,8 @@ class TransactionsController extends Controller
     public function store(Request $request)
     {
         //Validation
+        $this->validate($request,['iban' => 'iban','currency' => 'required']);
         $this->validate($request,['iban' => 'iban']);
-        $this->validate($request,['currency' => 'required','iban' => 'required']);
 
         $bank = new BankAccount();
         $bank->banking_number = strtoupper($request->input('iban'));
