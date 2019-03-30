@@ -18,6 +18,11 @@ return [
     'Password' => 'Wachtwoord',
     'Login' => 'Inloggen',
     'Register' => 'Registreren',
+    'CreatePayment' => 'Betaling Aanmaken',
+    'ForgotYourPassword?' => 'Wachtwoord Vergeten?',
+    'RememberMe' => 'Onthoud Me',
+    'BankAccounts' => 'Bankrekeningen',
+    'Payments' => 'Betalingen'
 
 
 ];
