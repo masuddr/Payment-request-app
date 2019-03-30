@@ -35,10 +35,10 @@
                     <!-- Left Side Of Navbar -->
                     @if (Auth::check())
                         <ul class="navbar-nav mr-auto">
-                            <a href="/view" class="navbar-brand">Bank Accounts</a>
+                            <a href="/view" class="navbar-brand">{{__('pagination.BankAccounts')}}</a>
                         </ul>
                         <ul class="navbar-nav mr-auto">
-                            <a href="/payments" class="navbar-brand">Payments</a>
+                            <a href="/payments" class="navbar-brand">{{__('pagination.Payments')}}</a>
                         </ul>
 
                 @endif

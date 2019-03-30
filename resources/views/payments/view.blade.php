@@ -14,7 +14,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard  <span class="float-right">
-                        <a href="/payments/create" class="btn btn-success btn-sm">Create Payment</a>
+                        <a href="/payments/create" class="btn btn-success btn-sm">{{__('pagination.CreatePayment')}}</a>
                     </span></div>
 
                 <div class="card-body">

@@ -15,5 +15,14 @@ return [
 
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
+    'Email' => 'Email Address',
+    'Password' => 'Password',
+    'Login' => 'Login',
+    'Register' => 'Register',
+    'CreatePayment' => 'Create Payment',
+    'RememberMe' => 'Remember Me',
+    'ForgotYourPassword?' => 'Forgot Your Password?',
+    'BankAccounts' => 'Bank Accounts',
+    'Payments' => 'Payments'
 
 ];
