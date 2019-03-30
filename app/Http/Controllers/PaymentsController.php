@@ -95,6 +95,7 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,['description' => 'required|max:15', 'amount' => 'digits_between:0.50,750.00']);
         $mollie = new \Mollie\Api\MollieApiClient();
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
         $currencies = ['EUR', 'USD', 'GBP'];
@@ -102,7 +103,7 @@ class PaymentsController extends Controller
 
         $orderId = time();
         $currency = $currencies[$cur];
-        $this->validate($request,['description' => 'required|max:15', 'amount' => 'digits_between:0.50,750.00']);
+
 
         $payment = $mollie->payments->create([
             "amount" => [

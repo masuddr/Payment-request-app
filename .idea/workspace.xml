@@ -47,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PaymentsController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="161">
-              <caret line="100" column="38" selection-start-line="100" selection-start-column="38" selection-end-line="100" selection-end-column="38" />
+              <caret line="97" column="113" selection-start-line="97" selection-start-column="113" selection-end-line="97" selection-end-column="113" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
               </folding>
@@ -444,7 +444,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102722000" />
+    <option name="totallyTimeSpent" value="103081000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -797,7 +797,7 @@
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PaymentsController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
-          <caret line="100" column="38" selection-start-line="100" selection-start-column="38" selection-end-line="100" selection-end-column="38" />
+          <caret line="97" column="113" selection-start-line="97" selection-start-column="113" selection-end-line="97" selection-end-column="113" />
           <folding>
             <element signature="e#40#68#0#PHP" expanded="true" />
           </folding>
