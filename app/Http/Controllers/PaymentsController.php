@@ -97,15 +97,16 @@ class PaymentsController extends Controller
     {
         $mollie = new \Mollie\Api\MollieApiClient();
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
+        $currencies = ['EUR', 'USD', 'GBP'];
+        $cur = Input::get('currencies');
 
         $orderId = time();
-        $currency = Input::get('currency');
-        return var_dump($currency);
+        $currency = $currencies[$cur];
         $this->validate($request,['description' => 'required|max:15', 'amount' => 'digits_between:0.50,750.00']);
 
         $payment = $mollie->payments->create([
             "amount" => [
-                "currency" => $request->input('currency'),
+                "currency" => $currency,
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
             "description" => $request->input('description'),
