@@ -38,7 +38,9 @@ class TransactionsController extends Controller
      */
     public function create()
     {
-        return view('transactions.create');
+        $currencies = ['EUR', 'USD', 'GBP'];
+
+        return view('transactions.create', compact('currencies'));
     }
 
     /**
@@ -49,13 +51,13 @@ class TransactionsController extends Controller
      */
     public function store(Request $request)
     {
-        //Valdiation
+        //Validation
         $this->validate($request,['iban' => 'iban']);
-        $this->validate($request,['name' => 'required','iban' => 'required']);
+        $this->validate($request,['currency' => 'required','iban' => 'required']);
 
         $bank = new BankAccount();
-        $bank->name = $request->input('name');
         $bank->banking_number = strtoupper($request->input('iban'));
+        $bank->currency = $request->input('currency');
         $bank->user_id = auth()->user()->id;
 
         $bank->save();
