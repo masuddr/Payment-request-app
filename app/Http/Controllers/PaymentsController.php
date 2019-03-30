@@ -8,6 +8,7 @@ use Mollie\Laravel\Facades\Mollie;
 use App\User;
 use App\BankAccount;
 use App\Payment;
+use Illuminate\Support\Facades\Input;
 
 class PaymentsController extends Controller
 {
@@ -79,7 +80,9 @@ class PaymentsController extends Controller
             return redirect('transactions/create')->with('danger','You have no bank accounts. Please create one before attempting to create a payment.');
         }
 
-        return view('payments.create',compact('bank'));
+        $currencies = ['EUR', 'USD', 'GBP'];
+
+        return view('payments.create',compact('bank','currencies'));
 
 
     }
@@ -96,12 +99,13 @@ class PaymentsController extends Controller
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
 
         $orderId = time();
-
-        $this->validate($request,['description' => 'required|max:15', 'amount' => 'digits_between:0.50,750']);
+        $currency = Input::get('currency');
+        return var_dump($currency);
+        $this->validate($request,['description' => 'required|max:15', 'amount' => 'digits_between:0.50,750.00']);
 
         $payment = $mollie->payments->create([
             "amount" => [
-                "currency" => "EUR",
+                "currency" => $request->input('currency'),
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
             "description" => $request->input('description'),

@@ -22,13 +22,16 @@
                         {!! Form::number('amount', null, ['class' => 'form-control','step' => 0.01]) !!}
                     </div>
                     <div class="form-group">
+                        {{ Form::select('currency', $currencies, null, ['class'=>'form-control']) }}
+                    </div>
+                    <div class="form-group">
                         {{ Form::select('banking_number', $bank, null, ['class'=>'form-control']) }}
-
                     </div>
                     <div class="form-group">
                         {!! Form::label('description', 'Description') !!}
                         {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
                     </div>
+
                     <br>
                     {{Form::submit('Send Payment',['class' => 'btn-primary'])}}
 
