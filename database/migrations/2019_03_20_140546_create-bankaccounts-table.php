@@ -15,7 +15,7 @@ class CreateBankaccountsTable extends Migration
     {
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('banking_number');
+            $table->string('banking_number')->unique();
             $table->string('currency');
             $table->decimal('balance', 10, 2)->default('0');
             $table->integer('user_id');

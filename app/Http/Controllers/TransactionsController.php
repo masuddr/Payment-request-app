@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\BankAccount;
+use Exception;
 
 class TransactionsController extends Controller
 {
@@ -53,18 +54,23 @@ class TransactionsController extends Controller
     {
         //Validation
         $this->validate($request,['iban' => 'iban','currency' => 'required']);
-        $this->validate($request,['iban' => 'iban']);
 
-        $bank = new BankAccount();
-        $bank->banking_number = strtoupper($request->input('iban'));
-        $currencies = ["EUR", "USD", "GBP"];
-        $cur = $currencies[$request->input('currency')];
-        $bank->currency = $cur;
-        $bank->user_id = auth()->user()->id;
+        try
+        {
+            $bank = new BankAccount();
+            $bank->banking_number = strtoupper($request->input('iban'));
+            $currencies = ["EUR", "USD", "GBP"];
+            $cur = $currencies[$request->input('currency')];
+            $bank->currency = $cur;
+            $bank->user_id = auth()->user()->id;
 
-        $bank->save();
+            $bank->save();
 
-        return redirect('/view')->with('success','Transaction Added');
+            return redirect('/view')->with('success','Transaction Added');
+        }catch(Exception $exception)
+        {
+            return redirect('transactions')->with('danger','You cannot create two identical banking numbers');
+        }
 
     }
 

@@ -20,12 +20,29 @@ class PaymentsController extends Controller
 
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
-        $payments = $user->payments;
+        $payments = Payment::all();
+        dd($payments);
 
+
+        $banks = $user->bankaccounts;
+        $banksArray = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
         foreach($payments as $payment)
         {
+
             $requested = $mollie->payments->get($payment->mollie_id);
             $payment->status = $requested->status;
+
+            foreach ($banksArray as $bank)
+            {
+                if ($payment->banking_number == $bank->banking_number)
+                {
+                    if ($payment->status == "paid")
+                    {
+                        $payment->paidAt = date("Y/m/d h:i");
+                        $payment_currency = $payment->amount->currency;
+                    }
+                }
+            }
         }
 
         return view('payments.view', compact('payments'));
@@ -122,9 +139,11 @@ class PaymentsController extends Controller
         $cur = Input::get('currency');
         $orderId = time();
         $currency = $currencies[$cur];
+
         $user_id = auth()->user()->id;
-           $user = User::find($user_id);
-            $banks = $user->bankaccounts;
+        $user = User::find($user_id);
+        $banks = $user->bankaccounts;
+        $banksArray = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
 
 
         $payment = $mollie->payments->create([
@@ -140,11 +159,7 @@ class PaymentsController extends Controller
             ],
             "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
         ]);
-        $iban = $banks->banking_number->toArray();
-        dd($iban[Input::get('banking_number')]);
-        dd($request->input('banking_number'));
 
-        var_dump($banks->banking_number);
         $amount =number_format((float)$request['amount'], 2, '.', '') ;
         $cur_current = 'EUR';
         $payment = $mollie->payments->get($payment->id);
@@ -157,16 +172,9 @@ class PaymentsController extends Controller
         $pay->description = $request->input('description');
         $pay->status = $payment->status;
         $pay->payment_url = $payment->getCheckoutUrl();
+        $pay->banking_number = $banksArray[Input::get('banking_number')];
         $pay->user_id = $user_id;
         $pay->save();
-
-//        if($payment->isPaid()){
-//
-//
-//            foreach ($banks as $bank){
-//                if()
-//            }
-//        }
 
         return redirect('payments');
 

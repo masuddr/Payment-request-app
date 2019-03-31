@@ -21,6 +21,7 @@ class CreatePaymentsTable extends Migration
             $table->string('status');
             $table->mediumText('description');
             $table->string('payment_url');
+            $table->string('banking_number');
             $table->date('paid_at')->nullable();
             $table->integer('user_id');
             $table->timestamps();
