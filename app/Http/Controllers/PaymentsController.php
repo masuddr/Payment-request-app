@@ -35,16 +35,19 @@ class PaymentsController extends Controller
             {
                 if ($payment->banking_number == $bank->banking_number)
                 {
+                    var_dump('banking_numbers gelijk');
                     if ($payment->status == "paid")
                     {
-                        if ($payment->paid_at == null)
+                        var_dump('status is betaald');
+                        var_dump($payment->paid_at);
+                        if ($payment->paid_at == '')
                         {
-                        $payment->paid_at = date("Y/m/d h:i");
-//                        $payment_currency = $payment->amount->currency;
-                    }
+                            var_dump('paid at is leeg');
+                            $payment->paid_at = date("d/m/Y h:i");
+                            $payment->save();
+                        }
                     }
                 }
-
             }
         }
 
