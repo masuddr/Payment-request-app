@@ -20,7 +20,11 @@
                             @foreach($banks as $bank)
                                 <tr>
                                     <td>{{$bank->banking_number}}</td>
-                                    <td>{{$bank->balance}} {{$bank->currency}}</td>
+                                    @if(Config::get('app.locale') == 'nl')
+                                        <td>{{str_replace('.', ',', $bank->balance).' '. $bank->currency}}</td>
+                                    @else
+                                        <td>{{$bank->balance}} {{$bank->currency}}</td>
+                                    @endif
                                     <th>   <form action="{{ action('TransactionsController@destroy', $bank->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
