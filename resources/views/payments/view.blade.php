@@ -23,16 +23,18 @@
                         <table class="table table-striped">
                             <tr>
 
+                                <th>Email</th>
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>URL</th>
                                 <th>Paid At</th>
-                                <th></th>
+
 
 
                             </tr>
                             @foreach($payments as $payment)
                                 <tr>
+                                    <td>{{$payment->email_address}}</td>
                                     <td>{{$payment->amount}} {{$payment->currency}}</td>
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
@@ -49,7 +51,6 @@
                                     @endif
 
                                     @endif
-
                                     <th>   <form action="{{ action('PaymentsController@destroy', $payment->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
