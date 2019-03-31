@@ -24,8 +24,7 @@ class PaymentsController extends Controller
 
 
         $banks = $user->bankaccounts;
-        $banksArray = BankAccount::find($user_id);
-        dd($banksArray);
+        $banksArray = $user->bankaccounts;
         foreach($payments as $payment)
         {
 
@@ -38,9 +37,11 @@ class PaymentsController extends Controller
                 {
                     if ($payment->status == "paid")
                     {
-
+                        if ($payment->paid_at == null)
+                        {
                         $payment->paid_at = date("Y/m/d h:i");
 //                        $payment_currency = $payment->amount->currency;
+                    }
                     }
                 }
 
