@@ -54,29 +54,8 @@ class PaymentsController extends Controller
     }
 
 
-    public function pay(Request $request){
-        $mollie = new \Mollie\Api\MollieApiClient();
-        $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
 
-        $orderId = time();
 
-        $payment = $mollie->payments->create([
-            "amount" => [
-                "currency" => "EUR",
-                "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
-            ],
-            "description" => "Order #{$orderId}",
-            "redirectUrl" => "https://668c6ca6.ngrok.io/payments/return.php?order_id={$orderId}",
-            "webhookUrl" => "https://668c6ca6.ngrok.io/payments/webhook.blade.php",
-            "metadata" => [
-                "order_id" => $orderId,
-            ],
-            "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
-        ]);
-
-        $url = $payment->getCheckoutUrl();
-        return redirect($url);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -203,7 +182,8 @@ class PaymentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $payment = Payment::find($id);
+        return view('payments.show',compact('payment'));
     }
 
     /**

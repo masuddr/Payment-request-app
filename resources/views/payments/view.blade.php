@@ -32,8 +32,8 @@
 
                             @foreach($payments as $payment)
                                 <tr>
-                                    <td>{{$payment->name}}</td>
-                                    <td>{{$payment->email_address}}</td>
+                                    <td><a href="payments/{{$payment->id}}">{{$payment->name}}</a></td>
+                                    <td><a href="mailto:{{$payment->email_address}}">{{$payment->email_address}}</a></td>
                                     <td>{{$payment->amount}} {{$payment->currency}}</td>
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
