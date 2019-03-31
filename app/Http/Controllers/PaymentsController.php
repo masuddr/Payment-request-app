@@ -10,6 +10,7 @@ use App\BankAccount;
 use App\Payment;
 use Illuminate\Support\Facades\Input;
 
+
 class PaymentsController extends Controller
 {
     public function index()
@@ -93,21 +94,42 @@ class PaymentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+    public function convertCurrency($amount,$from_currency,$to_currency){
+        $apikey = '84be6bf5b226e2d49dc1';
+
+        $from_Currency = urlencode($from_currency);
+        $to_Currency = urlencode($to_currency);
+        $query =  "{$from_Currency}_{$to_Currency}";
+
+        $json = file_get_contents("https://free.currencyconverterapi.com/api/v6/convert?q={$query}&compact=ultra&apiKey={$apikey}");
+        $obj = json_decode($json, true);
+
+        $val = floatval($obj["$query"]);
+
+
+        $total = $val * $amount;
+        return $total;
+    }
+
     public function store(Request $request)
     {
         $this->validate($request,['description' => 'required|max:15']);
         $mollie = new \Mollie\Api\MollieApiClient();
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
-        $currencies = ['EUR', 'USD', 'GBP'];
+        $currencies = ["EUR", "USD", "GBP"];
         $cur = Input::get('currency');
         $orderId = time();
         $currency = $currencies[$cur];
-//        dd($currency);
+        $user_id = auth()->user()->id;
+           $user = User::find($user_id);
+            $banks = $user->bankaccounts;
 
 
         $payment = $mollie->payments->create([
             "amount" => [
-                "currency" => "USD",
+                "currency" => "EUR",
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
             "description" => $request->input('description'),
@@ -118,23 +140,45 @@ class PaymentsController extends Controller
             ],
             "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
         ]);
+        $iban = $banks->banking_number->toArray();
+        dd($iban[Input::get('banking_number')]);
+        dd($request->input('banking_number'));
 
+        var_dump($banks->banking_number);
+        $amount =number_format((float)$request['amount'], 2, '.', '') ;
+        $cur_current = 'EUR';
         $payment = $mollie->payments->get($payment->id);
         $user_id = auth()->user()->id;
-
+        $total = $this->convertCurrency($amount,$cur_current,$currency);
         $pay = new Payment();
         $pay->mollie_id = $payment->id;
-        $pay->amount = $payment->amount->value;
-        $pay->currency = $payment->amount->currency;
+        $pay->amount = $total;
+        $pay->currency = $currency;
         $pay->description = $request->input('description');
         $pay->status = $payment->status;
         $pay->payment_url = $payment->getCheckoutUrl();
         $pay->user_id = $user_id;
         $pay->save();
 
+//        if($payment->isPaid()){
+//
+//
+//            foreach ($banks as $bank){
+//                if()
+//            }
+//        }
+
         return redirect('payments');
 
     }
+
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.

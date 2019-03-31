@@ -57,7 +57,9 @@ class TransactionsController extends Controller
 
         $bank = new BankAccount();
         $bank->banking_number = strtoupper($request->input('iban'));
-        $bank->currency = $request->input('currency');
+        $currencies = ["EUR", "USD", "GBP"];
+        $cur = $currencies[$request->input('currency')];
+        $bank->currency = $cur;
         $bank->user_id = auth()->user()->id;
 
         $bank->save();

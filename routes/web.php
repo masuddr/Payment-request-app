@@ -32,6 +32,9 @@ Route::get('/confirmed','PaymentsController@confirmedPayment');
 
 Route::get('/view','TransactionsController@index');
 
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

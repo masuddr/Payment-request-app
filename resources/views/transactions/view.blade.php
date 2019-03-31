@@ -12,15 +12,15 @@
                     @if(count($banks))
                         <table class="table table-striped">
                             <tr>
-                                <th>Bank Name</th>
                                 <th>IBAN</th>
+                                <th>Balance</th>
                                 <th></th>
 
                             </tr>
                             @foreach($banks as $bank)
                                 <tr>
-                                    <td>{{$bank->name}}</td>
                                     <td>{{$bank->banking_number}}</td>
+                                    <td>{{$bank->balance}} {{$bank->currency}}</td>
                                     <th>   <form action="{{ action('TransactionsController@destroy', $bank->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
