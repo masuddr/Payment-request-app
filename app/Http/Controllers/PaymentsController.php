@@ -20,12 +20,12 @@ class PaymentsController extends Controller
 
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
-        $payments = Payment::all();
-        dd($payments);
+        $payments =$user->payments;
 
 
         $banks = $user->bankaccounts;
-        $banksArray = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
+        $banksArray = BankAccount::find($user_id);
+        dd($banksArray);
         foreach($payments as $payment)
         {
 
@@ -38,10 +38,12 @@ class PaymentsController extends Controller
                 {
                     if ($payment->status == "paid")
                     {
-                        $payment->paidAt = date("Y/m/d h:i");
-                        $payment_currency = $payment->amount->currency;
+
+                        $payment->paid_at = date("Y/m/d h:i");
+//                        $payment_currency = $payment->amount->currency;
                     }
                 }
+
             }
         }
 
@@ -132,7 +134,7 @@ class PaymentsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,['description' => 'required|max:15']);
+        $this->validate($request,['description' => 'required|max:15','amount' => 'numeric|min:0.01']);
         $mollie = new \Mollie\Api\MollieApiClient();
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
         $currencies = ["EUR", "USD", "GBP"];

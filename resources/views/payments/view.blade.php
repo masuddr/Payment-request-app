@@ -26,6 +26,7 @@
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>URL</th>
+                                <th>Paid At</th>
                                 <th></th>
                                 <th></th>
 
@@ -36,6 +37,7 @@
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
                                     <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">Get Link</button></td>
+                                    <td>{{$payment->paid_at}}</td>
                                     <th>   <form action="{{ action('PaymentsController@destroy', $payment->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
