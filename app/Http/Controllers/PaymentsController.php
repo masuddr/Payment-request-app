@@ -68,7 +68,7 @@ class PaymentsController extends Controller
         $user = User::find($user_id);
         $banks = $user->bankaccounts;
         $banks_count = $user->bankaccounts->count();
-        $bank = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
+        $bank = $banks->pluck('banking_number')->toArray();
         if ($banks_count == 0)
         {
             return redirect('transactions/create')->with('danger','You have no bank accounts. Please create one before attempting to create a payment.');
@@ -112,10 +112,7 @@ class PaymentsController extends Controller
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
         $banks = $user->bankaccounts;
-        $banksArray = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
-        if($banksArray[Input::get('banking_number')] == "Select IBAN"){
-            return redirect('payments/create')->with('danger','Please select a valid IBAN');
-        }
+        $banksArray = $banks->pluck('banking_number')->toArray();
         $mollie = new \Mollie\Api\MollieApiClient();
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
         $currencies = ["EUR", "USD", "GBP"];

@@ -55,23 +55,25 @@ class TransactionsController extends Controller
         //Validation
         $this->validate($request,['iban' => 'iban','currency' => 'required']);
 
-        try
-        {
-            $bank = new BankAccount();
-            $bank->banking_number = strtoupper($request->input('iban'));
-            $currencies = ["EUR", "USD", "GBP"];
-            $cur = $currencies[$request->input('currency')];
-            $bank->currency = $cur;
-            $bank->user_id = auth()->user()->id;
+        $bank = new BankAccount();
+        $bank->banking_number = strtoupper($request->input('iban'));
+        $currencies = ["EUR", "USD", "GBP"];
+        $cur = $currencies[$request->input('currency')];
+        $bank->currency = $cur;
+        $bank->user_id = auth()->user()->id;
 
-            $bank->save();
-
-            return redirect('/view')->with('success','Transaction Added');
-        }catch(Exception $exception)
+        $user_id = Auth()->user()->id;
+        $user = User::find($user_id);
+        foreach($user->bankaccounts as $bankaccount)
         {
-            return redirect('transactions')->with('danger','You cannot create two identical banking numbers');
+            if ($bankaccount->banking_number == $bank->banking_number)
+            {
+                return redirect('transactions')->with('danger','You cannot create two identical banking numbers');
+            }
         }
+        $bank->save();
 
+        return redirect('/view')->with('success','Transaction Added');
     }
 
     /**

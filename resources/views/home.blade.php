@@ -13,11 +13,11 @@
                 <table border="1" cellpadding="3">
                     <tr><td colspan="2" align="center">{{__('pagination.YourInfo')}}</td></tr>
                     <tr>
-                        <td>Name: {{$user->name}}</td>
+                        <td>{{__('pagination.Name')}}: {{$user->name}}</td>
                     </tr>
 
                     <tr>
-                        <td>Email: {{$user->email}}</td>
+                        <td>{{__('pagination.Email')}}: {{$user->email}}</td>
                     </tr>
                 </table>
             </div>

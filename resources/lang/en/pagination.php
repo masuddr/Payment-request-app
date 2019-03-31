@@ -36,5 +36,9 @@ return [
     'YourInfo' => 'Your Info',
     'Balance' => 'Balance',
     'Delete' => 'Delete',
-
+    'GoBack' => 'Go Back',
+    'CreateBankAccount' => 'Create bank account',
+    'GetLink' => 'Get Link',
+    'Description' => 'Description',
+    'CreatePayment' => 'Create Payment'
 ];

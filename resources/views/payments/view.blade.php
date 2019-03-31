@@ -37,7 +37,7 @@
                                     <td>{{$payment->amount}} {{$payment->currency}}</td>
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
-                                    <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">Get Link</button></td>
+                                    <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">{{__('pagination.GetLink')}}</button></td>
 
                                         
                                     @if ($payment->paid_at != null)

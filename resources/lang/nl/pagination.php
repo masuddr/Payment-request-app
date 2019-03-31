@@ -35,5 +35,9 @@ return [
     'YourInfo' => 'Uw gegevens',
     'Balance' => 'Balans',
     'Delete' => 'Verwijderen',
-
+    'GoBack' => 'Ga terug',
+    'CreateBankAccount' => 'Maak bankrekening',
+    'GetLink' => 'Krijg link',
+    'Description' => 'Omschrijving',
+    'CreatePayment' => 'Maak betaling',
 ];

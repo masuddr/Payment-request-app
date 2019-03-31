@@ -24,7 +24,7 @@
                                     <th>   <form action="{{ action('TransactionsController@destroy', $bank->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
-                                            <button type="submit" class="btn-danger btn-sm float-right">Delete</button>
+                                            <button type="submit" class="btn-danger btn-sm float-right">{{__('pagination.Delete')}}</button>
                                         </form>
                                     </th>
                                 </tr>
