@@ -203,7 +203,8 @@ class PaymentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $payment = Payment::find($id);
+        return view('payments.show',compact('payment'));
     }
 
     /**
