@@ -100,14 +100,14 @@ class PaymentsController extends Controller
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
         $currencies = ['EUR', 'USD', 'GBP'];
         $cur = Input::get('currency');
-
         $orderId = time();
         $currency = $currencies[$cur];
+//        dd($currency);
 
 
         $payment = $mollie->payments->create([
             "amount" => [
-                "currency" => $currency,
+                "currency" => "USD",
                 "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
             "description" => $request->input('description'),

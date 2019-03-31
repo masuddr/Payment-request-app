@@ -22,6 +22,7 @@
                     @if(count($payments))
                         <table class="table table-striped">
                             <tr>
+
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>URL</th>
