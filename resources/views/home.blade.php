@@ -11,7 +11,7 @@
                     </span>
                 </div>
                 <table border="1" cellpadding="3">
-                    <tr><td colspan="2" align="center">Your Info</td></tr>
+                    <tr><td colspan="2" align="center">{{__('pagination.YourInfo')}}</td></tr>
                     <tr>
                         <td>Name: {{$user->name}}</td>
                     </tr>

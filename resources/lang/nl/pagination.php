@@ -17,6 +17,7 @@ return [
     'Email' => 'Email adres',
     'Password' => 'Wachtwoord',
     'Login' => 'Inloggen',
+    'Logout' => 'Uitloggen',
     'Register' => 'Registreren',
     'CreatePayment' => 'Betaling Aanmaken',
     'ForgotYourPassword?' => 'Wachtwoord Vergeten?',
@@ -25,7 +26,14 @@ return [
     'Payments' => 'Betalingen',
     'yourpayments' => 'Jouw Betalingen',
     'yourbankaccounts' => 'Jouw Bankrekeningen',
-    'createbankaccount' => 'Bankrekening Aanmaken'
-
+    'createbankaccount' => 'Bankrekening Aanmaken',
+    'Name' => 'Naam',
+    'Amount' => 'Bedrag',
+    'Status' => 'Status',
+    'URL' => 'URL',
+    'PaidAt' => 'Betaaldatum',
+    'YourInfo' => 'Uw gegevens',
+    'Balance' => 'Balans',
+    'Delete' => 'Verwijderen',
 
 ];

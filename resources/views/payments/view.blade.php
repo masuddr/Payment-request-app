@@ -22,16 +22,14 @@
                     @if(count($payments))
                         <table class="table table-striped">
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>URL</th>
-                                <th>Paid At</th>
-
-
-
+                                <th>{{__('pagination.Name')}}</th>
+                                <th>{{__('pagination.Email')}}</th>
+                                <th>{{__('pagination.Amount')}}</th>
+                                <th>{{__('pagination.Status')}}</th>
+                                <th>{{__('pagination.URL')}}</th>
+                                <th>{{__('pagination.PaidAt')}}</th>
                             </tr>
+
                             @foreach($payments as $payment)
                                 <tr>
                                     <td>{{$payment->name}}</td>
@@ -58,7 +56,7 @@
                                             @if ($payment->status == 'paid')
 
                                             @else
-                                            <button type="submit" class="btn-danger btn-sm float-right">Delete</button>
+                                            <button type="submit" class="btn-danger btn-sm float-right">{{__('pagination.Delete')}}</button>
                                             @endif
                                         </form>
                                     </th>

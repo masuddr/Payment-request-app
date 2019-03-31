@@ -13,7 +13,7 @@
                         <table class="table table-striped">
                             <tr>
                                 <th>IBAN</th>
-                                <th>Balance</th>
+                                <th>{{__('pagination.Balance')}}</th>
                                 <th></th>
 
                             </tr>

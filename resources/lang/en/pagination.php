@@ -18,6 +18,7 @@ return [
     'Email' => 'Email Address',
     'Password' => 'Password',
     'Login' => 'Login',
+    'Logout' => 'Logout',
     'Register' => 'Register',
     'CreatePayment' => 'Create Payment',
     'RememberMe' => 'Remember Me',
@@ -26,6 +27,14 @@ return [
     'Payments' => 'Payments',
     'yourpayments' => 'Your Payments',
     'yourbankaccounts' => 'Your Bank Accounts',
-    'createbankaccount' => 'Create Bank Account'
+    'createbankaccount' => 'Create Bank Account',
+    'Name' => 'Name',
+    'Amount' => 'Amount',
+    'Status' => 'Status',
+    'URL' => 'URL',
+    'PaidAt' => 'Payment date',
+    'YourInfo' => 'Your Info',
+    'Balance' => 'Balance',
+    'Delete' => 'Delete',
 
 ];
