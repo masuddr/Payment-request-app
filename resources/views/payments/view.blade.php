@@ -34,7 +34,11 @@
                                 <tr>
                                     <td><a href="payments/{{$payment->id}}">{{$payment->name}}</a></td>
                                     <td><a href="mailto:{{$payment->email_address}}">{{$payment->email_address}}</a></td>
+                                    @if(Config::get('app.locale') == 'nl')
+                                        <td>{{str_replace('.', ',', $payment->amount).' '. $payment->currency}}</td>
+                                        @else
                                     <td>{{$payment->amount}} {{$payment->currency}}</td>
+                                    @endif
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
                                     <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">{{__('pagination.GetLink')}}</button></td>
