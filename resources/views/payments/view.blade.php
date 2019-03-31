@@ -22,7 +22,7 @@
                     @if(count($payments))
                         <table class="table table-striped">
                             <tr>
-
+                                <th>Name</th>
                                 <th>Email</th>
                                 <th>Amount</th>
                                 <th>Status</th>
@@ -34,6 +34,7 @@
                             </tr>
                             @foreach($payments as $payment)
                                 <tr>
+                                    <td>{{$payment->name}}</td>
                                     <td>{{$payment->email_address}}</td>
                                     <td>{{$payment->amount}} {{$payment->currency}}</td>
                                     <td>{{$payment->status}}</td>
