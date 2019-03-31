@@ -23,27 +23,45 @@
                         <table class="table table-striped">
                             <tr>
 
+                                <th>Email</th>
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>URL</th>
                                 <th>Paid At</th>
-                                <th></th>
-                                <th></th>
+
+
 
                             </tr>
                             @foreach($payments as $payment)
                                 <tr>
+                                    <td>{{$payment->email_address}}</td>
                                     <td>{{$payment->amount}} {{$payment->currency}}</td>
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
                                     <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">Get Link</button></td>
-                                    <td>{{$payment->paid_at}}</td>
+
+                                        
+                                    @if ($payment->paid_at != null)
+
+                                    <td>@if(Config::get('app.locale') =='en')
+                                            {{ Carbon\Carbon::parse($payment->paid_at)->format('Y-m-d H:i') }}
+
+                                    @else
+                                     {{ Carbon\Carbon::parse($payment->paid_at)->format('d-m-Y H:i') }}</td>
+                                    @endif
+
+                                    @endif
                                     <th>   <form action="{{ action('PaymentsController@destroy', $payment->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input name="_method" type="hidden" value="DELETE">
+                                            @if ($payment->status == 'paid')
+
+                                            @else
                                             <button type="submit" class="btn-danger btn-sm float-right">Delete</button>
+                                            @endif
                                         </form>
                                     </th>
+
                                 </tr>
                             @endforeach
                         </table>

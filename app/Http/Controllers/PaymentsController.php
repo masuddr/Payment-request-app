@@ -35,15 +35,14 @@ class PaymentsController extends Controller
             {
                 if ($payment->banking_number == $bank->banking_number)
                 {
-                    var_dump('banking_numbers gelijk');
                     if ($payment->status == "paid")
                     {
-                        var_dump('status is betaald');
-                        var_dump($payment->paid_at);
                         if ($payment->paid_at == '')
                         {
-                            var_dump('paid at is leeg');
-                            $payment->paid_at = date("d/m/Y h:i");
+                            $payment->paid_at = date("Y/m/d h:i");
+                            $amount = $this->convertCurrency($payment->amount,$payment->currency,$bank->currency);
+                            $bank->balance+=$amount;
+                            $bank->save();
                             $payment->save();
                         }
                     }
@@ -54,14 +53,6 @@ class PaymentsController extends Controller
         return view('payments.view', compact('payments'));
     }
 
-    public function preparePayment()
-    {
-        $mollie = new \Mollie\Api\MollieApiClient();
-        $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
-        $method = $mollie->methods->get(\Mollie\Api\Types\PaymentMethod::IDEAL, ["include" => "issuers"]);
-
-        return view('molliepayment', compact('method'));
-    }
 
     public function pay(Request $request){
         $mollie = new \Mollie\Api\MollieApiClient();
@@ -138,24 +129,35 @@ class PaymentsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,['description' => 'required|max:15','amount' => 'numeric|min:0.01']);
+        $this->validate($request,['description' => 'required|max:15','amount' => 'numeric|min:0.01', 'email' => 'email']);
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $banks = $user->bankaccounts;
+        $banksArray = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
+        if($banksArray[Input::get('banking_number')] == "Select IBAN"){
+            return redirect('payments/create')->with('danger','Please select a valid IBAN');
+        }
         $mollie = new \Mollie\Api\MollieApiClient();
         $mollie->setApiKey('test_gGaGze4z6E2BcMhe5U6DQv5UhNu6Gq');
         $currencies = ["EUR", "USD", "GBP"];
         $cur = Input::get('currency');
         $orderId = time();
         $currency = $currencies[$cur];
+        $tempAmount = 0.01;
 
-        $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        $banks = $user->bankaccounts;
-        $banksArray = array('' => 'Select IBAN') + $banks->pluck('banking_number')->toArray();
 
+        if($currency == "USD"){
+          $tempAmount = $this->convertCurrency(number_format((float)$request['amount'], 2, '.', ''),'USD','EUR');
+        }else if ($currency == 'GBP'){
+            $tempAmount = $this->convertCurrency(number_format((float)$request['amount'], 2, '.', ''),'GBP','EUR');
+        } else{
+            $tempAmount = number_format((float)$request['amount'], 2, '.', '');
+        }
 
         $payment = $mollie->payments->create([
             "amount" => [
                 "currency" => "EUR",
-                "value" => number_format((float)$request['amount'], 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
+                "value" => number_format((float)$tempAmount, 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
             "description" => $request->input('description'),
             "redirectUrl" => "http://127.0.0.1:8000/payments",
@@ -170,16 +172,16 @@ class PaymentsController extends Controller
         $cur_current = 'EUR';
         $payment = $mollie->payments->get($payment->id);
         $user_id = auth()->user()->id;
-        $total = $this->convertCurrency($amount,$cur_current,$currency);
         $pay = new Payment();
         $pay->mollie_id = $payment->id;
-        $pay->amount = $total;
+        $pay->amount =  number_format((float)$request->input('amount'), 2, '.', '');
         $pay->currency = $currency;
         $pay->description = $request->input('description');
         $pay->status = $payment->status;
         $pay->payment_url = $payment->getCheckoutUrl();
         $pay->banking_number = $banksArray[Input::get('banking_number')];
         $pay->user_id = $user_id;
+        $pay->email_address = $request->input('email');
         $pay->save();
 
         return redirect('payments');
