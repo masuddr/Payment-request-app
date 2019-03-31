@@ -37,11 +37,17 @@
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
                                     <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">Get Link</button></td>
+
+                                        
+                                    @if ($payment->paid_at != null)
+
                                     <td>@if(Config::get('app.locale') =='en')
                                             {{ Carbon\Carbon::parse($payment->paid_at)->format('Y-m-d H:i') }}
 
                                     @else
                                      {{ Carbon\Carbon::parse($payment->paid_at)->format('d-m-Y H:i') }}</td>
+                                    @endif
+
                                     @endif
 
                                     <th>   <form action="{{ action('PaymentsController@destroy', $payment->id) }}" method="post">
