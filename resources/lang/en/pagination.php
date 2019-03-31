@@ -40,5 +40,9 @@ return [
     'CreateBankAccount' => 'Create bank account',
     'GetLink' => 'Get Link',
     'Description' => 'Description',
-    'CreatePayment' => 'Create Payment'
+    'CreatePayment' => 'Create Payment',
+    'ResetPassword' => 'Reset Password',
+    'SendPasswordResetLink' => 'Send Password Reset Link',
+    'ConfirmPassword' => 'Confirm Password',
+
 ];

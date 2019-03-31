@@ -40,4 +40,8 @@ return [
     'GetLink' => 'Krijg link',
     'Description' => 'Omschrijving',
     'CreatePayment' => 'Maak betaling',
+    'ResetPassword' => 'Wachtwoord herstellen',
+    'SendPasswordResetLink' => 'Open wachtwoord herstelpagina',
+    'ConfirmPassword' => 'Bevestig wachtwoord'
+
 ];
