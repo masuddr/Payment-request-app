@@ -168,8 +168,6 @@ class PaymentsController extends Controller
             "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
         ]);
 
-        $amount =number_format((float)$request['amount'], 2, '.', '') ;
-        $cur_current = 'EUR';
         $payment = $mollie->payments->get($payment->id);
         $user_id = auth()->user()->id;
         $pay = new Payment();
@@ -180,8 +178,9 @@ class PaymentsController extends Controller
         $pay->status = $payment->status;
         $pay->payment_url = $payment->getCheckoutUrl();
         $pay->banking_number = $banksArray[Input::get('banking_number')];
-        $pay->user_id = $user_id;
+        $pay->name = $request->input('name');
         $pay->email_address = $request->input('email');
+        $pay->user_id = $user_id;
         $pay->save();
 
         return redirect('payments');
