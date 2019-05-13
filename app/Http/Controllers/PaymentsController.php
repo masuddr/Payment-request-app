@@ -39,7 +39,7 @@ class PaymentsController extends Controller
                     {
                         if ($payment->paid_at == '')
                         {
-                            $payment->paid_at = date("Y/m/d h:i");
+                            $payment->paid_at = date("Y/m/d H:i");
                             $amount = $this->convertCurrency($payment->amount,$payment->currency,$bank->currency);
                             $bank->balance+=$amount;
                             $bank->save();
@@ -108,7 +108,8 @@ class PaymentsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,['description' => 'required|max:15','amount' => 'numeric|min:0.01', 'email' => 'email']);
+        $this->validate($request,['description' => 'required|max:15','amount' => 'numeric|min:0.01', 'email' => 'email','amount'
+        => 'numeric|max:10000']);
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
         $banks = $user->bankaccounts;
@@ -136,7 +137,7 @@ class PaymentsController extends Controller
                 "value" => number_format((float)$tempAmount, 2, '.', '') // You must send the correct number of decimals, thus we enforce the use of strings
             ],
             "description" => $request->input('description'),
-            "redirectUrl" => "http://127.0.0.1:8000/payments",
+            "redirectUrl" => "http://google.nl",
             "webhookUrl" => "https://5db35498.ngrok.io/payments/webhook.blade.php",
             "metadata" => [
                 "order_id" => $orderId,
@@ -144,21 +145,22 @@ class PaymentsController extends Controller
             "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null
         ]);
 
-        $payment = $mollie->payments->get($payment->id);
-        $user_id = auth()->user()->id;
-        $pay = new Payment();
-        $pay->mollie_id = $payment->id;
-        $pay->amount =  number_format((float)$request->input('amount'), 2, '.', '');
-        $pay->currency = $currency;
-        $pay->description = $request->input('description');
-        $pay->status = $payment->status;
-        $pay->payment_url = $payment->getCheckoutUrl();
-        $pay->banking_number = $banksArray[Input::get('banking_number')];
-        $pay->name = $request->input('name');
-        $pay->email_address = $request->input('email');
-        $pay->user_id = $user_id;
-        $pay->save();
+//        $payment = $mollie->payments->get($payment->id);
+//        $user_id = auth()->user()->id;
+//        $pay = new Payment();
+//        $pay->mollie_id = $payment->id;
+//        $pay->amount =  number_format((float)$request->input('amount'), 2, '.', '');
+//        $pay->currency = $currency;
+//        $pay->description = $request->input('description');
+//        $pay->status = $payment->status;
+//        $pay->payment_url = $payment->getCheckoutUrl();
+//        $pay->banking_number = $banksArray[Input::get('banking_number')];
+//        $pay->name = $request->input('name');
+//        $pay->email_address = $request->input('email');
+//        $pay->user_id = $user_id;
+//        $pay->save();
 
+        dd($payment->redirectUrl);
         return redirect('payments');
 
     }

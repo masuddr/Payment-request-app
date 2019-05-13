@@ -41,16 +41,19 @@
                                     @endif
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
-                                    <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">{{__('pagination.GetLink')}}</button></td>
-
-                                        
+                                    @if($payment->paid_at != null)
+                                    <td><button disabled class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">{{__('pagination.GetLink')}}</button></td>
+                                            @else
+                                        <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">{{__('pagination.GetLink')}}</button></td>
+                                        @endif
                                     @if ($payment->paid_at != null)
 
-                                    <td>@if(Config::get('app.locale') =='en')
-                                            {{ Carbon\Carbon::parse($payment->paid_at)->format('Y-m-d H:i') }}
+                                    <td>@if(Config::get('app.locale') =='nl')
+                                            {{ date('  d/m/Y H:i' , strtotime($payment->paid_at)) }}
 
                                     @else
-                                     {{ Carbon\Carbon::parse($payment->paid_at)->format('d-m-Y H:i') }}</td>
+
+                                            {{ date('  Y/m/d h:i A' , strtotime($payment->paid_at)) }}</td>
                                     @endif
 
                                     @endif
