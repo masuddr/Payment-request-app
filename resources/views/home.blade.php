@@ -15,7 +15,6 @@
                     <tr>
                         <td>{{__('pagination.Name')}}: {{$user->name}}</td>
                     </tr>
-
                     <tr>
                         <td>{{__('pagination.Email')}}: {{$user->email}}</td>
                     </tr>

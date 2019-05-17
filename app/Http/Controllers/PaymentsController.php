@@ -37,8 +37,11 @@ class PaymentsController extends Controller
                 {
                     if ($payment->status == "paid")
                     {
+
                         if ($payment->paid_at == '')
                         {
+                            $payment->payment_url = '';
+                            dd($payment->payment_url);
                             $payment->paid_at = date("Y/m/d H:i");
                             $amount = $this->convertCurrency($payment->amount,$payment->currency,$bank->currency);
                             $bank->balance+=$amount;

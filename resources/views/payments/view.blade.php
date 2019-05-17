@@ -41,11 +41,9 @@
                                     @endif
                                     <td>{{$payment->status}}</td>
                                     <p id="{{$payment->id}}" style="display: none">{{$payment->payment_url}}</p>
-                                    @if($payment->paid_at != null)
-                                    <td><button disabled class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">{{__('pagination.GetLink')}}</button></td>
-                                            @else
+
                                         <td><button class="btn btn-primary" onclick="copyToClipboard('#{{$payment->id}}')">{{__('pagination.GetLink')}}</button></td>
-                                        @endif
+
                                     @if ($payment->paid_at != null)
 
                                     <td>@if(Config::get('app.locale') =='nl')
