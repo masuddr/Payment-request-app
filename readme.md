@@ -1,5 +1,7 @@
-#Laravel Project
-##Payment request app with
-⋅⋅*Mollie api
-⋅⋅*currency converter api
-⋅⋅*Dutch/English language support
+# Laravel Project
+
+## Payment request app with:
+* Mollie api
+* Currency converter api
+* Dutch/English language support
+* User authentication
